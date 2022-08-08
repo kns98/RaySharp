@@ -49,7 +49,7 @@ public class Camera
 
     public Vector3f.vT eyePoint => viewPosition_m;
 
-    public Image frame(Scene scene, Image image, Random random)
+    public Image frame(Scene scene, Image image, Random random,  int total_iterations, int iteration)
     {
         var i = 0;
         var rayTracer = new RayTracer(scene);
@@ -60,20 +60,41 @@ public class Camera
         {
             var x = xy % image.Width;
             var y = (xy - x) / image.Width;
-            var xF = (x + random.NextDouble()) * 2.0d / image.Width - 1.0d;
-            var yF = (y + random.NextDouble()) * 2.0d / image.Height - 1.0d;
 
-            // make minImage plane offset vector
-            var offset = Vector3f.op_Plus(Vector3f.op_Mul(right_m, xF),
-                Vector3f.op_Mul(up_m, yF * (image.Height / image.Width)));
-            var sampleDirection = Vector3f.vUnitize(Vector3f.op_Plus(viewDirection_m,
-                Vector3f.op_Mul(offset, Math.Tan(viewAngle_m * 0.5))));
-            var radiance = rayTracer.radiance(viewPosition_m, sampleDirection, null, rand);
-            image.AddToPixel(x, Math.Abs(y - (image.Width - 1)), radiance);
+            int num_samples = total_iterations-iteration;
+            Stack<Vector3f.vT> stack = new Stack<Vector3f.vT>();
+
+            var rad = Vector3f.vZero;
+            for (int i = 0; i < num_samples; i++)
+            {
+                for (int k = 0; k < num_samples; k++)
+                {
+                    rad = Vector3f.op_Plus(rad, VT(image, random, x, y, rayTracer, rand, i,k, num_samples));
+                }
+            }
+
+            image.AddToPixel(x, Math.Abs(y - (image.Width - 1)), 
+                Vector3f.op_Div(rad,num_samples));
             const int _div = 100000;
             var j = Interlocked.Increment(ref i);
             if (j % _div == 0) Console.WriteLine(j / (total / 100) + " % of pixels processed:" + DateTime.Now);
         });
         return image;
+    }
+
+    private Vector3f.vT VT(Image image, Random random, int x, int y, RayTracer rayTracer, Random rand,int sample_i,int sample_j,int total_samples)
+    {
+        double offset_mul = sample_i / total_samples;
+
+        var xF = (x + random.NextDouble()) * (2.0d*offset_mul) / image.Width - (1.0d*offset_mul/2);
+        var yF = (y + random.NextDouble()) * (2.0d*offset_mul) / image.Height - (1.0d*offset_mul/2);
+
+        // make minImage plane offset vector
+        var offset = Vector3f.op_Plus(Vector3f.op_Mul(right_m, xF),
+            Vector3f.op_Mul(up_m, yF * (image.Height / image.Width)));
+        var sampleDirection = Vector3f.vUnitize(Vector3f.op_Plus(viewDirection_m,
+            Vector3f.op_Mul(offset, Math.Tan(viewAngle_m * 0.5 *  (sample_j/total_samples)  ))));
+        var radiance = rayTracer.radiance(viewPosition_m, sampleDirection, null, rand);
+        return radiance;
     }
 }
