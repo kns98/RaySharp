@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "camera": {
+      "commandName": "Project",
+      "commandLineArgs": "roomfront.txt"
+    }
+  }
+}
