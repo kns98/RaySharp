@@ -8,6 +8,7 @@ public class Camera
     internal readonly Vector3f.vT viewDirection_m;
     internal readonly Vector3f.vT viewPosition_m;
 
+    
     public Camera(TextReader inBuffer_i)
     {
         var viewPosition_c = Vector3f.vRead(inBuffer_i);
@@ -51,29 +52,61 @@ public class Camera
 
     public Image frame(Scene scene, Image image, Random random)
     {
-        var i = 0;
+       // var i = 0;
         var rayTracer = new RayTracer(scene);
-        var _lock = new object();
-        var rand = new Random();
-        var total = (image.Height - 1) * (image.Width - 1);
-        Parallel.For(0, total, delegate(int xy)
-        {
-            var x = xy % image.Width;
-            var y = (xy - x) / image.Width;
-            var xF = (x + random.NextDouble()) * 2.0d / image.Width - 1.0d;
-            var yF = (y + random.NextDouble()) * 2.0d / image.Height - 1.0d;
+        //ar _lock = new object();
+        //var total = (image.Height - 1) * (image.Width - 1);
 
-            // make minImage plane offset vector
-            var offset = Vector3f.op_Plus(Vector3f.op_Mul(right_m, xF),
-                Vector3f.op_Mul(up_m, yF * (image.Height / image.Width)));
-            var sampleDirection = Vector3f.vUnitize(Vector3f.op_Plus(viewDirection_m,
-                Vector3f.op_Mul(offset, Math.Tan(viewAngle_m * 0.5))));
-            var radiance = rayTracer.radiance(viewPosition_m, sampleDirection, null, rand);
-            image.AddToPixel(x, Math.Abs(y - (image.Width - 1)), radiance);
-            const int _div = 100000;
-            var j = Interlocked.Increment(ref i);
-            if (j % _div == 0) Console.WriteLine(j / (total / 100) + " % of pixels processed:" + DateTime.Now);
-        });
+        var action = new Render2d(rayTracer, image, new Random(),
+            up_m, right_m, viewDirection_m, viewAngle_m, viewPosition_m);
+        
+
+        ParallelHelper.For2D(0,0,image.Width-1,image.Height-1, action);
         return image;
     }
+
+    class Render2d : IAction2D
+    {
+        private RayTracer rayTracer;
+        private Image image;
+        private Random rand;
+        private Vector3f.vT up;
+        private Vector3f.vT right;
+        private double ang;
+        private Vector3f.vT pos;
+        private Vector3f.vT dir;
+
+        public Render2d(RayTracer r, Image i, Random ra, Vector3f.vT up, Vector3f.vT right, 
+            Vector3f.vT dir, double ang, Vector3f.vT pos )
+        {
+            this.rayTracer = r;
+            this.image = i;
+            this.rand = ra;
+            this.up = up;
+            this.right = right;
+            this.dir = dir;
+            this.ang = ang;
+            this.pos = pos;
+        }
+
+        public void Invoke(int x, int y)
+        {
+            var xF = (x + rand.NextDouble()) * 2.0d / image.Width - 1.0d;
+            var yF = (y + rand.NextDouble()) * 2.0d / image.Height - 1.0d;
+
+            // make minImage plane offset vector
+            var offset = Vector3f.op_Plus(Vector3f.op_Mul(right, xF),
+                Vector3f.op_Mul(up, yF * (image.Height / image.Width)));
+            var sampleDirection = Vector3f.vUnitize(Vector3f.op_Plus(dir,
+                Vector3f.op_Mul(offset, Math.Tan(ang * 0.5))));
+            var radiance = rayTracer.radiance(pos, sampleDirection, null, rand);
+            image.AddToPixel(x, Math.Abs(y - (image.Width - 1)), radiance);
+
+            //const int _div = 100000;
+            //var j = Interlocked.Increment(ref i);
+            //if (j % _div == 0) Console.WriteLine(j / (total / 100) + " % of pixels processed:" + DateTime.Now);
+        }
+    }
+
+
 }

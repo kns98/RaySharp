@@ -122,7 +122,7 @@ namespace minlightcsfs
         /// <param name="action">The <typeparamref name="TAction"/> instance representing the action to invoke.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void For2D<TAction>(int top, int bottom, int left, int right, in TAction action)
-            where TAction : struct, IAction2D
+            where TAction : IAction2D
         {
             For2D(top, bottom, left, right, action, 1);
         }
@@ -142,7 +142,7 @@ namespace minlightcsfs
         /// enough that it is more efficient to set a lower bound per each running thread.
         /// </param>
         public static void For2D<TAction>(int top, int bottom, int left, int right, in TAction action, int minimumActionsPerThread)
-            where TAction : struct, IAction2D
+            where TAction : IAction2D
         {
             if (minimumActionsPerThread <= 0)
             {
@@ -202,7 +202,7 @@ namespace minlightcsfs
 
         // Wrapping struct acting as explicit closure to execute the processing batches
         private readonly struct Action2DInvoker<TAction>
-            where TAction : struct, IAction2D
+            where TAction : IAction2D
         {
             private readonly int startY;
             private readonly int endY;
