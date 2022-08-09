@@ -1,36 +1,26 @@
-/*Name: Yen Pham
-Assignment 3
-CS 5390
-This program resizes a ppm image to 1/4 and 4 times of the original image
-
-to compile: go to Putty using cse machine: cse01.cse.unt.edu
-gcc pham3.c -lm
-
-to run: ./a.out
-
-*/
+/* Credit : Yen Pham */
 
 #include <ctype.h>
 #include <errno.h>
-#include <math.h> 
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 
-typedef struct RGB
+using RGBpixel = struct RGB
 {
 	unsigned char R, G, B;
-}RGBpixel;
+};
 
-typedef struct Image
+using PPMimage = struct Image
 {
 	int magic_identifier;
 	int width, height;
 	int max_value;
 	RGBpixel* data;
-}PPMimage;
+};
 
 void ReadPPM(char* filename, PPMimage* image);
 void CreatePPM(PPMimage original_img, PPMimage* small_img);
@@ -52,11 +42,12 @@ int main()
 	{
 		printf("Enter ppm file name: ");
 		scanf("%s", infile);
-		if (strstr(infile, ".ppm") == NULL)
+		if (strstr(infile, ".ppm") == nullptr)
 		{
 			printf("Please input a .ppm file\n");
 		}
-	} while (strstr(infile, ".ppm") == NULL);
+	}
+	while (strstr(infile, ".ppm") == nullptr);
 
 	// Call functions
 	ReadPPM(infile, &original_img);
@@ -69,7 +60,7 @@ void ReadPPM(char* filename, PPMimage* image) //open and read ppm file
 {
 	FILE* fp = fopen(filename, "rb");
 
-	if (fp == NULL)
+	if (fp == nullptr)
 	{
 		printf("Error opening file. No file existed with that name\n");
 		exit(0);
@@ -309,15 +300,22 @@ void CreatePPM(PPMimage original_img, PPMimage* small_img)
 			i = t * (*small_img).width + g;
 
 			//printf("i: %d n: %d \n", i, n); 
-			(*small_img).data[i].R = round((double)(original_img.data[n].R + original_img.data[n + 1].R + original_img.data[n + original_img.width].R + original_img.data[1 + n + original_img.width].R) / 4.0);
-			(*small_img).data[i].G = round((double)(original_img.data[n].G + original_img.data[n + 1].G + original_img.data[n + original_img.width].G + original_img.data[1 + n + original_img.width].G) / 4.0);
-			(*small_img).data[i].B = round((double)(original_img.data[n].B + original_img.data[n + 1].B + original_img.data[n + original_img.width].B + original_img.data[1 + n + original_img.width].B) / 4.0);
+			(*small_img).data[i].R = round(
+				static_cast<double>(original_img.data[n].R + original_img.data[n + 1].R + original_img.data[n +
+						original_img.width].R +
+					original_img.data[1 + n + original_img.width].R) / 4.0);
+			(*small_img).data[i].G = round(
+				static_cast<double>(original_img.data[n].G + original_img.data[n + 1].G + original_img.data[n +
+						original_img.width].G +
+					original_img.data[1 + n + original_img.width].G) / 4.0);
+			(*small_img).data[i].B = round(
+				static_cast<double>(original_img.data[n].B + original_img.data[n + 1].B + original_img.data[n +
+						original_img.width].B +
+					original_img.data[1 + n + original_img.width].B) / 4.0);
 
 			n += 2 * original_img.width;
 		}
 	}
-
-	
 }
 
 void WritePPM(PPMimage small_img)
@@ -353,5 +351,4 @@ void WritePPM(PPMimage small_img)
 		fprintf(fp, "%d %d %d\n", small_img.width, small_img.height, small_img.max_value);
 		fwrite(small_img.data, 3 * small_img.width, small_img.height, fp);
 	}
-
 }
