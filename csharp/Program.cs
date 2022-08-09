@@ -36,7 +36,7 @@ internal class Program
             var lastTime = Operators.Ref(-181.0);
             for (var frameNo = 0; frameNo < iterations; frameNo++)
             {
-                camera.frame(scene, image, random,iterations, frameNo);
+                camera.frame(scene, image, random);
                 saveImage(imageFilePathname, image, frameNo);
                 PrintfModule
                     .PrintFormat(

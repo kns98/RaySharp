@@ -41,10 +41,6 @@ public static class Vector3f
     {
         return new vT(v0.V + v1.V + v2.V);
     }
-    public static vT op_Plus(vT v0, vT v1, vT v2, vT v3)
-    {
-        return new vT(v0.V + v1.V + v2.V+v3.V);
-    }
 
     public static vT op_Minus(vT v0, vT v1)
     {
