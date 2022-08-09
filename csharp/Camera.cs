@@ -52,10 +52,9 @@ public class Camera
 
     public Image frame(Scene scene, Image image, Random random)
     {
-       // var i = 0;
         var rayTracer = new RayTracer(scene);
-        //ar _lock = new object();
-        //var total = (image.Height - 1) * (image.Width - 1);
+        
+        
 
         var action = new Render2d(rayTracer, image, new Random(),
             up_m, right_m, viewDirection_m, viewAngle_m, viewPosition_m);
@@ -75,7 +74,8 @@ public class Camera
         private double ang;
         private Vector3f.vT pos;
         private Vector3f.vT dir;
-
+        private int count = 0;
+        private int total;
         public Render2d(RayTracer r, Image i, Random ra, Vector3f.vT up, Vector3f.vT right, 
             Vector3f.vT dir, double ang, Vector3f.vT pos )
         {
@@ -87,6 +87,7 @@ public class Camera
             this.dir = dir;
             this.ang = ang;
             this.pos = pos;
+            total = (image.Height - 1) * (image.Width - 1);
         }
 
         public void Invoke(int x, int y)
@@ -102,9 +103,9 @@ public class Camera
             var radiance = rayTracer.radiance(pos, sampleDirection, null, rand);
             image.AddToPixel(x, Math.Abs(y - (image.Width - 1)), radiance);
 
-            //const int _div = 100000;
-            //var j = Interlocked.Increment(ref i);
-            //if (j % _div == 0) Console.WriteLine(j / (total / 100) + " % of pixels processed:" + DateTime.Now);
+            const int _div = 100000;
+            var j = Interlocked.Increment(ref count);
+            if (j % _div == 0) Console.WriteLine(j / (total / 100) + " % of pixels processed:" + DateTime.Now);
         }
     }
 
