@@ -61,7 +61,7 @@ public class Camera
             up_m, right_m, viewDirection_m, viewAngle_m, viewPosition_m);
         
 
-        ParallelHelper.For2D(0,0,image.Width-1,image.Height-1, action);
+        ParallelHelper.For2D(0,image.Height-1,0,image.Width-1, action);
         return image;
     }
 
