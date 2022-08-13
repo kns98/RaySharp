@@ -81,18 +81,11 @@ public partial class PlanePolygonBuilder
             var planeTriangleOffset = vertices2D.Count;
             vertices3D.Add(p0);
             vertices3D.Add(p1);
-#if UNITY_EDITOR || UNITY_STANDALONE
-                var p0Rotated = this.Rotation * p0;
-                this.vertices2D.Add(new Vertex(p0Rotated.x, p0Rotated.y));
 
-                var p1Rotated = this.Rotation * p1;
-                this.vertices2D.Add(new Vertex(p1Rotated.x, p1Rotated.y));
-#else
             var p0Rotated = Vector3.Transform(p0, Rotation);
             vertices2D.Add(new Vertex(p0Rotated.X, p0Rotated.Y));
             var p1Rotated = Vector3.Transform(p1, Rotation);
             vertices2D.Add(new Vertex(p1Rotated.X, p1Rotated.Y));
-#endif
             edges.Add(planeTriangleOffset + 0);
             edges.Add(planeTriangleOffset + 1);
         }
@@ -152,18 +145,14 @@ public partial class PlanePolygonBuilder
             sb.AppendLine("var builder = PlanePolygonBuilder.CreatePolygonBuilder();");
             for (var i = 0; i < vertices2D.Count - 1; i += 2)
             {
-#if UNITY_EDITOR || UNITY_STANDALONE
-                    sb.AppendLine($"builder.AddEdge(new Vector3({this.vertices2D[i].x:0.00000000}f, {this.vertices2D[i].y:0.00000000}f, 0), new Vector3({this.vertices2D[i + 1].x:0.00000000}f, {this.vertices2D[i + 1].y:0.00000000}f, 0));");
-#else
                 sb.AppendLine(
                     $"builder.AddEdge(new Vector3({vertices2D[i].X:0.00000000}f, {vertices2D[i].Y:0.00000000}f, 0), new Vector3({vertices2D[i + 1].X:0.00000000}f, {vertices2D[i + 1].Y:0.00000000}f, 0));");
-#endif
             }
 
             sb.AppendLine("builder.BuildPolygon();");
             return sb.ToString();
 #else
-                return this.ToString();
+            return this.ToString();
 #endif
         }
     }

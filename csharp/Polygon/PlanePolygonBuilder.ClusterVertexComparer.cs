@@ -2,11 +2,9 @@
 
 namespace minlightcsfs.PolygonTriangulation;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
-    using Vertex = UnityEngine.Vector2;
-#else
+
 using Vertex = Vector2;
-#endif
+
 
 /// <summary>
 ///     subclass container
