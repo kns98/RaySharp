@@ -1,109 +1,106 @@
-﻿namespace PolygonTriangulation
-{
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
+﻿using System.Collections;
 
+namespace PolygonTriangulation;
+
+/// <summary>
+///     subclass container for polygon
+/// </summary>
+public partial class Polygon
+{
     /// <summary>
-    /// subclass container for polygon
+    ///     An enumerable that creates a <see cref="NextChainEnumerator" />
     /// </summary>
-    public partial class Polygon
+    private class NextChainEnumerable : IEnumerable<int>
     {
+        private readonly IReadOnlyList<VertexChain> chain;
+        private readonly int start;
+
         /// <summary>
-        /// An enumerable that creates a <see cref="NextChainEnumerator"/>
+        ///     Initializes a new instance of the <see cref="NextChainEnumerable" /> class.
         /// </summary>
-        private class NextChainEnumerable : IEnumerable<int>
+        /// <param name="start">The start.</param>
+        /// <param name="chain">The chain.</param>
+        public NextChainEnumerable(int start, IReadOnlyList<VertexChain> chain)
         {
-            private readonly int start;
+            this.start = start;
+            this.chain = chain;
+        }
+
+        /// <inheritdoc />
+        public IEnumerator<int> GetEnumerator()
+        {
+            return new NextChainEnumerator(start, chain);
+        }
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Internal enumerator
+        /// </summary>
+        private sealed class NextChainEnumerator : IEnumerator<int>
+        {
             private readonly IReadOnlyList<VertexChain> chain;
+            private readonly int start;
+#if DEBUG
+            private int maxIteratorCount;
+#endif
+            private bool reset;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="NextChainEnumerable" /> class.
+            ///     Initializes a new instance of the <see cref="NextChainEnumerator" /> class.
             /// </summary>
             /// <param name="start">The start.</param>
             /// <param name="chain">The chain.</param>
-            public NextChainEnumerable(int start, IReadOnlyList<VertexChain> chain)
+            public NextChainEnumerator(int start, IReadOnlyList<VertexChain> chain)
             {
                 this.start = start;
                 this.chain = chain;
+                reset = true;
+#if DEBUG
+                maxIteratorCount = chain.Count;
+#endif
             }
 
-            /// <inheritdoc/>
-            public IEnumerator<int> GetEnumerator() => new NextChainEnumerator(this.start, this.chain);
+            /// <inheritdoc />
+            public int Current { get; private set; }
 
-            /// <inheritdoc/>
-            IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+            /// <inheritdoc />
+            object IEnumerator.Current => Current;
 
-            /// <summary>
-            /// Internal enumerator
-            /// </summary>
-            private sealed class NextChainEnumerator : IEnumerator<int>
+            /// <inheritdoc />
+            public void Dispose()
             {
-                private readonly int start;
-                private readonly IReadOnlyList<VertexChain> chain;
-                private bool reset;
-#if DEBUG
-                private int maxIteratorCount;
-#endif
+                Current = -1;
+            }
 
-                /// <summary>
-                /// Initializes a new instance of the <see cref="NextChainEnumerator" /> class.
-                /// </summary>
-                /// <param name="start">The start.</param>
-                /// <param name="chain">The chain.</param>
-                public NextChainEnumerator(int start, IReadOnlyList<VertexChain> chain)
+            /// <inheritdoc />
+            public bool MoveNext()
+            {
+                if (reset)
                 {
-                    this.start = start;
-                    this.chain = chain;
-                    this.reset = true;
+                    reset = false;
+                    Current = start;
+                }
+                else
+                {
+                    Current = chain[Current].Next;
+                    if (Current == start) return false;
 #if DEBUG
-                    this.maxIteratorCount = chain.Count;
+                    if (--maxIteratorCount < 0) throw new InvalidOperationException("Chain is damaged");
 #endif
                 }
 
-                /// <inheritdoc/>
-                public int Current { get; private set; }
+                return true;
+            }
 
-                /// <inheritdoc/>
-                object IEnumerator.Current => this.Current;
-
-                /// <inheritdoc/>
-                public void Dispose()
-                {
-                    this.Current = -1;
-                }
-
-                /// <inheritdoc/>
-                public bool MoveNext()
-                {
-                    if (this.reset)
-                    {
-                        this.reset = false;
-                        this.Current = this.start;
-                    }
-                    else
-                    {
-                        this.Current = this.chain[this.Current].Next;
-                        if (this.Current == this.start)
-                        {
-                            return false;
-                        }
-#if DEBUG
-                        if (--this.maxIteratorCount < 0)
-                        {
-                            throw new InvalidOperationException("Chain is damaged");
-                        }
-#endif
-                    }
-
-                    return true;
-                }
-
-                /// <inheritdoc/>
-                public void Reset()
-                {
-                    this.reset = true;
-                }
+            /// <inheritdoc />
+            public void Reset()
+            {
+                reset = true;
             }
         }
     }

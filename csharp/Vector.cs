@@ -175,7 +175,6 @@ public static class Vector3f
         }
 
         public double this[int i] => V[i];
-
     }
 }
 

@@ -14,10 +14,6 @@ public class Image
     private const string LOMONT_URI = "http://www.lomont.org";
     private const string KNS_URI = "Kevin Sheth";
 
-    private int MAX_WIDTH = 32000;
-
-    private int MAX_HEIGHT = 32000;
-
     // guess of average screen maximum brightness
     private static readonly double DISPLAY_LUMINANCE_MAX = 200.0f;
 
@@ -27,6 +23,8 @@ public class Image
     // ITU-R BT.709 standard gamma
     private static readonly double GAMMA_ENCODE = 0.45f;
     private readonly Vector3f.vT[,] pixels;
+    private readonly int MAX_HEIGHT = 32000;
+    private readonly int MAX_WIDTH = 32000;
 
     /// <summary>
     ///     Create image based on size from stream

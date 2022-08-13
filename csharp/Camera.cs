@@ -8,7 +8,6 @@ public class Camera
     internal readonly Vector3f.vT viewDirection_m;
     internal readonly Vector3f.vT viewPosition_m;
 
-    
     public Camera(TextReader inBuffer_i)
     {
         var viewPosition_c = Vector3f.vRead(inBuffer_i);
@@ -53,35 +52,31 @@ public class Camera
     public Image frame(Scene scene, Image image, Random random)
     {
         var rayTracer = new RayTracer(scene);
-        
-        
-
         var action = new Render2d(rayTracer, image, new Random(),
             up_m, right_m, viewDirection_m, viewAngle_m, viewPosition_m);
-        
-
-        ParallelHelper.For2D(0,image.Height-1,0,image.Width-1, action);
+        ParallelHelper.For2D(0, image.Height - 1, 0, image.Width - 1, action);
         return image;
     }
 
-    class Render2d : IAction2D
+    private class Render2d : IAction2D
     {
-        private RayTracer rayTracer;
-        private Image image;
-        private Random rand;
-        private Vector3f.vT up;
-        private Vector3f.vT right;
-        private double ang;
-        private Vector3f.vT pos;
-        private Vector3f.vT dir;
-        private int count = 0;
-        private int total;
-        public Render2d(RayTracer r, Image i, Random ra, Vector3f.vT up, Vector3f.vT right, 
-            Vector3f.vT dir, double ang, Vector3f.vT pos )
+        private readonly double ang;
+        private int count;
+        private readonly Vector3f.vT dir;
+        private readonly Image image;
+        private readonly Vector3f.vT pos;
+        private readonly Random rand;
+        private readonly RayTracer rayTracer;
+        private readonly Vector3f.vT right;
+        private readonly int total;
+        private readonly Vector3f.vT up;
+
+        public Render2d(RayTracer r, Image i, Random ra, Vector3f.vT up, Vector3f.vT right,
+            Vector3f.vT dir, double ang, Vector3f.vT pos)
         {
-            this.rayTracer = r;
-            this.image = i;
-            this.rand = ra;
+            rayTracer = r;
+            image = i;
+            rand = ra;
             this.up = up;
             this.right = right;
             this.dir = dir;
@@ -102,12 +97,9 @@ public class Camera
                 Vector3f.op_Mul(offset, Math.Tan(ang * 0.5))));
             var radiance = rayTracer.radiance(pos, sampleDirection, null, rand);
             image.AddToPixel(x, Math.Abs(y - (image.Width - 1)), radiance);
-
             const int _div = 100000;
             var j = Interlocked.Increment(ref count);
             if (j % _div == 0) Console.WriteLine(j / (total / 100) + " % of pixels processed:" + DateTime.Now);
         }
     }
-
-
 }

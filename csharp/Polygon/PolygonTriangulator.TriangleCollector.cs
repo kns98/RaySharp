@@ -1,57 +1,54 @@
-﻿namespace PolygonTriangulation
+﻿namespace PolygonTriangulation;
+
+/// <summary>
+///     Receive triangles
+/// </summary>
+public interface ITriangleCollector
 {
-    using System.Collections.Generic;
-
     /// <summary>
-    /// Receive triangles
+    ///     Add a triangle
     /// </summary>
-    public interface ITriangleCollector
-    {
-        /// <summary>
-        /// Add a triangle
-        /// </summary>
-        /// <param name="v0">id of vertex 0</param>
-        /// <param name="v1">id of vertex 1</param>
-        /// <param name="v2">id of vertex 2</param>
-        void AddTriangle(int v0, int v1, int v2);
-    }
+    /// <param name="v0">id of vertex 0</param>
+    /// <param name="v1">id of vertex 1</param>
+    /// <param name="v2">id of vertex 2</param>
+    void AddTriangle(int v0, int v1, int v2);
+}
 
+/// <summary>
+///     Receive triangles and provide the recieved triangles
+/// </summary>
+public interface IArrayTriangleCollector : ITriangleCollector
+{
     /// <summary>
-    /// Receive triangles and provide the recieved triangles
+    ///     Gets the triangles
     /// </summary>
-    public interface IArrayTriangleCollector : ITriangleCollector
-    {
-        /// <summary>
-        /// Gets the triangles
-        /// </summary>
-        int[] Triangles { get; }
-    }
+    int[] Triangles { get; }
+}
 
+/// <summary>
+///     subclass container for triangulator
+/// </summary>
+public partial class PolygonTriangulator
+{
     /// <summary>
-    /// subclass container for triangulator
+    ///     The triangle collector
     /// </summary>
-    public partial class PolygonTriangulator
+    private class TriangleCollector : IArrayTriangleCollector
     {
-        /// <summary>
-        /// The triangle collector
-        /// </summary>
-        private class TriangleCollector : IArrayTriangleCollector
+        private readonly List<int> triangles;
+
+        public TriangleCollector()
         {
-            private readonly List<int> triangles;
+            triangles = new List<int>();
+        }
 
-            public TriangleCollector()
-            {
-                this.triangles = new List<int>();
-            }
+        public int[] Triangles => triangles.ToArray();
 
-            public int[] Triangles => this.triangles.ToArray();
-
-            public void AddTriangle(int v0, int v1, int v2)
-            {
-                this.triangles.Add(v0);
-                this.triangles.Add(v1);
-                this.triangles.Add(v2);
-            }
+        public void AddTriangle(int v0, int v1, int v2)
+        {
+            triangles.Add(v0);
+            triangles.Add(v1);
+            triangles.Add(v2);
         }
     }
 }

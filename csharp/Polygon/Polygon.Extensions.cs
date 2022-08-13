@@ -1,24 +1,22 @@
-﻿namespace PolygonTriangulation
+﻿using System.Numerics;
+
+namespace PolygonTriangulation;
+
+using Vertex = Vector2;
+
+/// <summary>
+///     Extension methods for polygon
+/// </summary>
+public static class PolygonExtensions
 {
-    using System.Collections.Generic;
-
-    using Vertex = System.Numerics.Vector2;
-
-
     /// <summary>
-    /// Extension methods for polygon
+    ///     Adds the vertices.
     /// </summary>
-    public static class PolygonExtensions
+    /// <param name="builder">The builder.</param>
+    /// <param name="vertices">The vertices.</param>
+    /// <returns>the same builder</returns>
+    public static IPolygonBuilder AddVertices(this IPolygonBuilder builder, params int[] vertices)
     {
-        /// <summary>
-        /// Adds the vertices.
-        /// </summary>
-        /// <param name="builder">The builder.</param>
-        /// <param name="vertices">The vertices.</param>
-        /// <returns>the same builder</returns>
-        public static IPolygonBuilder AddVertices(this IPolygonBuilder builder, params int[] vertices)
-        {
-            return builder.AddVertices((IEnumerable<int>)vertices);
-        }
+        return builder.AddVertices(vertices);
     }
 }

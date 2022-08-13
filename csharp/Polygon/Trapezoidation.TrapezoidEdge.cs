@@ -1,58 +1,57 @@
-﻿namespace PolygonTriangulation
+﻿namespace PolygonTriangulation;
+
+/// <summary>
+///     subclass container for trapzoidation
+/// </summary>
+public partial class Trapezoidation
 {
     /// <summary>
-    /// subclass container for trapzoidation
+    ///     Internal representation of an edge
     /// </summary>
-    public partial class Trapezoidation
+    private class TrapezoidEdge : ITestingTrapezoidEdge
     {
-        /// <summary>
-        /// Internal representation of an edge
-        /// </summary>
-        private class TrapezoidEdge : ITestingTrapezoidEdge
+        public TrapezoidEdge(int left, int right, int rightUnique, bool isRightToLeft)
         {
-            public TrapezoidEdge(int left, int right, int rightUnique, bool isRightToLeft)
-            {
-                this.IsRightToLeft = isRightToLeft;
-                this.Left = left;
-                this.Right = right;
-                this.RightUnique = rightUnique;
-            }
+            IsRightToLeft = isRightToLeft;
+            Left = left;
+            Right = right;
+            RightUnique = rightUnique;
+        }
 
-            /// <summary>
-            /// Gets a value indicating whether this instance is right to left.
-            /// </summary>
-            public bool IsRightToLeft { get; }
+        /// <summary>
+        ///     Gets a value indicating whether this instance is right to left.
+        /// </summary>
+        public bool IsRightToLeft { get; }
 
-            /// <summary>
-            /// Gets the left vertex id.
-            /// </summary>
-            public int Left { get; }
+        /// <summary>
+        ///     Gets the left vertex id.
+        /// </summary>
+        public int Left { get; }
 
-            /// <summary>
-            /// Gets the right vertex id.
-            /// </summary>
-            public int Right { get; }
+        /// <summary>
+        ///     Gets the right vertex id.
+        /// </summary>
+        public int Right { get; }
 
-            /// <summary>
-            /// Gets the unique id of the right vertex
-            /// </summary>
-            public int RightUnique { get; }
+        /// <summary>
+        ///     Gets the unique id of the right vertex
+        /// </summary>
+        public int RightUnique { get; }
 
-            /// <summary>
-            /// Gets or sets the node in the red black tree
-            /// </summary>
-            public IOrderedNode<TrapezoidEdge> TreeNode { get; set; }
+        /// <summary>
+        ///     Gets or sets the node in the red black tree
+        /// </summary>
+        public IOrderedNode<TrapezoidEdge> TreeNode { get; set; }
 
-            /// <summary>
-            /// Gets or sets the current associated trapezoid.
-            /// </summary>
-            public Trapezoid Trapezoid { get; set; }
+        /// <summary>
+        ///     Gets or sets the current associated trapezoid.
+        /// </summary>
+        public Trapezoid Trapezoid { get; set; }
 
-            /// <inheritdoc/>
-            public override string ToString()
-            {
-                return $"{this.Left}{(this.IsRightToLeft ? "<" : ">")}{this.Right}";
-            }
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"{Left}{(IsRightToLeft ? "<" : ">")}{Right}";
         }
     }
 }
