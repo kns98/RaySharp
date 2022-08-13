@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace PolygonTriangulation;
+namespace minlightcsfs.PolygonTriangulation;
 
 /// <summary>
 ///     polygon data for exceptions during polygon triangulation

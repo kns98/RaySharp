@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace PolygonTriangulation;
+namespace minlightcsfs.PolygonTriangulation;
 
 /// <summary>
 ///     The polygon result after combining all edges

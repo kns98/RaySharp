@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace PolygonTriangulation;
+namespace minlightcsfs.PolygonTriangulation;
 
 using Vertex = Vector2;
 

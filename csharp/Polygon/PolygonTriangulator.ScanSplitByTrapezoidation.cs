@@ -1,4 +1,4 @@
-﻿namespace PolygonTriangulation;
+﻿namespace minlightcsfs.PolygonTriangulation;
 
 /// <summary>
 ///     subclass container for triangulator

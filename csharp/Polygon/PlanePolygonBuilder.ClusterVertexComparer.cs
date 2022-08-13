@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace PolygonTriangulation;
+namespace minlightcsfs.PolygonTriangulation;
 
 #if UNITY_EDITOR || UNITY_STANDALONE
     using Vertex = UnityEngine.Vector2;

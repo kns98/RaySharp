@@ -1,4 +1,4 @@
-﻿namespace PolygonTriangulation;
+﻿namespace minlightcsfs.PolygonTriangulation;
 
 /// <summary>
 ///     Receive triangles

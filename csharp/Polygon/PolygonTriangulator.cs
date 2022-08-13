@@ -1,4 +1,4 @@
-﻿namespace PolygonTriangulation;
+﻿namespace minlightcsfs.PolygonTriangulation;
 
 /// <summary>
 ///     Build triangles for a polygon

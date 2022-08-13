@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System.Text;
 
-namespace PolygonTriangulation;
+namespace minlightcsfs.PolygonTriangulation;
 
 using Vertex = Vector2;
 

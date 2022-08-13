@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
-namespace PolygonTriangulation;
+namespace minlightcsfs.PolygonTriangulation;
 
 /// <summary>
 ///     A storage node with prev/next access

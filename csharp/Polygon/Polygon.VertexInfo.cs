@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace PolygonTriangulation;
+namespace minlightcsfs.PolygonTriangulation;
 
 /// <summary>
 ///     The action necessary for the vertex transition.

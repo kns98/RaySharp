@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace PolygonTriangulation;
+namespace minlightcsfs.PolygonTriangulation;
 
 /// <summary>
 ///     subclass container for trapzoidation

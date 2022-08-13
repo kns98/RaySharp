@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace PolygonTriangulation;
+namespace minlightcsfs.PolygonTriangulation;
 
 /// <summary>
 ///     subclass container for polygon
