@@ -2,13 +2,9 @@
 {
     using System.Collections.Generic;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
-    using Vector3 = UnityEngine.Vector3;
-    using Vertex = UnityEngine.Vector2;
-#else
     using Vector3 = System.Numerics.Vector3;
     using Vertex = System.Numerics.Vector2;
-#endif
+
 
     /// <summary>
     /// Resulting plane mesh with coordinates and triangles

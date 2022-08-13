@@ -2,15 +2,11 @@
 {
     using System;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
-    using Plane = UnityEngine.Plane;
-    using Quaternion = UnityEngine.Quaternion;
-    using Vector3 = UnityEngine.Vector3;
-#else
+
     using Plane = System.Numerics.Plane;
     using Quaternion = System.Numerics.Quaternion;
     using Vector3 = System.Numerics.Vector3;
-#endif
+
 
     /// <summary>
     /// Collect the edges for a plane polygon

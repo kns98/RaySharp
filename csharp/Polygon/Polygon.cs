@@ -7,11 +7,7 @@
     using System.Linq;
     using System.Runtime.CompilerServices;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
-    using Vertex = UnityEngine.Vector2;
-#else
     using Vertex = System.Numerics.Vector2;
-#endif
 
     /// <summary>
     /// Represent a collection of closed polygons.

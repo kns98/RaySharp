@@ -3,11 +3,8 @@
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
-    using Vertex = UnityEngine.Vector2;
-#else
     using Vertex = System.Numerics.Vector2;
-#endif
+
 
     /// <summary>
     /// subclass container for trapzoidation

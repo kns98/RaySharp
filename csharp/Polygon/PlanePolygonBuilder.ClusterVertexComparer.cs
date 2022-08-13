@@ -22,40 +22,7 @@
             /// <inheritdoc/>
             public int Compare(Vertex x, Vertex y)
             {
-#if UNITY_EDITOR || UNITY_STANDALONE
-                var xdist = Math.Abs(x.x - y.x);
-                if (xdist < epsilon)
-                {
-                    var ydist = Math.Abs(x.y - y.y);
-                    if (ydist < epsilon)
-                    {
-                        return 0;
-                    }
 
-                    var xCompare = x.x.CompareTo(y.x);
-                    if (xCompare != 0)
-                    {
-                        return xCompare;
-                    }
-
-                    if (x.y < y.y)
-                    {
-                        return -1;
-                    }
-                    else
-                    {
-                        return 1;
-                    }
-                }
-                else if (x.x < y.x)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 1;
-                }
-#else
                 var xdist = Math.Abs(x.X - y.X);
                 if (xdist < Epsilon)
                 {
@@ -88,7 +55,6 @@
                 {
                     return 1;
                 }
-#endif
             }
         }
     }

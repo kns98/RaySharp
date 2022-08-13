@@ -1,10 +1,8 @@
 ﻿namespace PolygonTriangulation
 {
-#if UNITY_EDITOR || UNITY_STANDALONE
-    using Vector3 = UnityEngine.Vector3;
-#else
+
     using Vector3 = System.Numerics.Vector3;
-#endif
+
 
     /// <summary>
     /// The polygon result after combining all edges

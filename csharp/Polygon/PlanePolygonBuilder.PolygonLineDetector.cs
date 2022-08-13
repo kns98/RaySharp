@@ -4,11 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
-#if UNITY_EDITOR || UNITY_STANDALONE
-    using Vertex = UnityEngine.Vector2;
-#else
     using Vertex = System.Numerics.Vector2;
-#endif
+
 
     /// <summary>
     /// Test interface for the polygon line detector (join edges to polygon lines)

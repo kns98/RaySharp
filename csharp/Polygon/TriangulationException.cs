@@ -83,13 +83,10 @@
 
             sb.AppendLine("var vertices = new[]");
             sb.AppendLine("{");
-#if UNITY_EDITOR || UNITY_STANDALONE
-            var vertexStrings = polygon.Vertices.Select(
-                x => string.Format(culture, "    new Vertex({0:0.0000000}f, {1:0.0000000}f),", x.x, x.y));
-#else
+
             var vertexStrings = polygon.Vertices.Select(
                 x => string.Format(culture, "    new Vertex({0:0.0000000}f, {1:0.0000000}f),", x.X, x.Y));
-#endif
+
             sb.AppendLine(string.Join(Environment.NewLine, vertexStrings));
             sb.AppendLine("};");
             sb.AppendLine(string.Empty);
