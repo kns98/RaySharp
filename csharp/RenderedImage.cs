@@ -6,7 +6,7 @@ using System.Text;
 
 namespace minlightcsfs;
 
-public class Image
+public class RenderedImage
 {
     // format items
     private const string PPM_ID = "P6";
@@ -30,7 +30,7 @@ public class Image
     ///     Create image based on size from stream
     /// </summary>
     /// <param name="infile"></param>
-    public Image(StreamReader infile, int width, int height)
+    public RenderedImage(StreamReader infile, int width, int height)
     {
         // read width and height
         Width = width;

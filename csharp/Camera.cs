@@ -49,13 +49,13 @@ public class Camera
 
     public Vector3f.vT eyePoint => viewPosition_m;
 
-    public Image frame(Scene scene, Image image, Random random)
+    public RenderedImage frame(Scene scene, RenderedImage renderedImage, Random random)
     {
         var rayTracer = new RayTracer(scene);
-        var action = new Render2d(rayTracer, image, new Random(),
+        var action = new Render2d(rayTracer, renderedImage, new Random(),
             up_m, right_m, viewDirection_m, viewAngle_m, viewPosition_m);
-        ParallelHelper.For2D(0, image.Height - 1, 0, image.Width - 1, action);
-        return image;
+        ParallelHelper.For2D(0, renderedImage.Height - 1, 0, renderedImage.Width - 1, action);
+        return renderedImage;
     }
 
     private class Render2d : IAction2D
@@ -63,7 +63,7 @@ public class Camera
         private readonly double ang;
         private int count;
         private readonly Vector3f.vT dir;
-        private readonly Image image;
+        private readonly RenderedImage renderedImage;
         private readonly Vector3f.vT pos;
         private readonly Random rand;
         private readonly RayTracer rayTracer;
@@ -71,32 +71,32 @@ public class Camera
         private readonly int total;
         private readonly Vector3f.vT up;
 
-        public Render2d(RayTracer r, Image i, Random ra, Vector3f.vT up, Vector3f.vT right,
+        public Render2d(RayTracer r, RenderedImage i, Random ra, Vector3f.vT up, Vector3f.vT right,
             Vector3f.vT dir, double ang, Vector3f.vT pos)
         {
             rayTracer = r;
-            image = i;
+            renderedImage = i;
             rand = ra;
             this.up = up;
             this.right = right;
             this.dir = dir;
             this.ang = ang;
             this.pos = pos;
-            total = (image.Height - 1) * (image.Width - 1);
+            total = (renderedImage.Height - 1) * (renderedImage.Width - 1);
         }
 
         public void Invoke(int x, int y)
         {
-            var xF = (x + rand.NextDouble()) * 2.0d / image.Width - 1.0d;
-            var yF = (y + rand.NextDouble()) * 2.0d / image.Height - 1.0d;
+            var xF = (x + rand.NextDouble()) * 2.0d / renderedImage.Width - 1.0d;
+            var yF = (y + rand.NextDouble()) * 2.0d / renderedImage.Height - 1.0d;
 
             // make minImage plane offset vector
             var offset = Vector3f.op_Plus(Vector3f.op_Mul(right, xF),
-                Vector3f.op_Mul(up, yF * (image.Height / image.Width)));
+                Vector3f.op_Mul(up, yF * (renderedImage.Height / renderedImage.Width)));
             var sampleDirection = Vector3f.vUnitize(Vector3f.op_Plus(dir,
                 Vector3f.op_Mul(offset, Math.Tan(ang * 0.5))));
             var radiance = rayTracer.radiance(pos, sampleDirection, null, rand);
-            image.AddToPixel(x, Math.Abs(y - (image.Width - 1)), radiance);
+            renderedImage.AddToPixel(x, Math.Abs(y - (renderedImage.Width - 1)), radiance);
             const int _div = 100000;
             var j = Interlocked.Increment(ref count);
             if (j % _div == 0) Console.WriteLine(j / (total / 100) + " % of pixels processed:" + DateTime.Now);

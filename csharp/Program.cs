@@ -29,7 +29,7 @@ internal class Program
             var width = int.Parse(_line.Split(" ")[0]);
             var height = int.Parse(_line.Split(" ")[1]);
             var iterations = int.Parse(s);
-            var image = new Image(modelFile, width, height);
+            var image = new RenderedImage(modelFile, width, height);
             var camera = new Camera(modelFile);
             var scene = new Scene(modelFile, camera.eyePoint);
             var random = new Random(1);
@@ -46,8 +46,8 @@ internal class Program
         }
     }
 
-    private static void saveImage(string imageFilePathname, Image image, int frameNo)
+    private static void saveImage(string imageFilePathname, RenderedImage renderedImage, int frameNo)
     {
-        image.SaveImage(imageFilePathname, frameNo, false);
+        renderedImage.SaveImage(imageFilePathname, frameNo, false);
     }
 }
