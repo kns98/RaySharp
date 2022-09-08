@@ -12,7 +12,7 @@ namespace minlightcsfs
 {
     public static class Scanf
     {
-        
+
         public static string getLine(TextReader f)
         {
             bool empty = true;
@@ -66,22 +66,22 @@ namespace minlightcsfs
 
 
         internal sealed class matches_32 : FSharpFunc<Group, object>
-		{
+        {
 
-        internal matches_32()
-			{
-			}
+            internal matches_32()
+            {
+            }
 
 
-    public override object Invoke(Group g)
-    {
-        string value = g.Value;
-        string text = value;
-        return text;
+            public override object Invoke(Group g)
+            {
+                string value = g.Value;
+                string text = value;
+                return text;
+            }
+
+
+            internal static readonly Scanf.matches_32 @_instance = new Scanf.matches_32();
+        }
     }
-
-
-    internal static readonly Scanf.matches_32 @_instance = new Scanf.matches_32();
-		}
-	}
 }
