@@ -1,0 +1,309 @@
+<Scene>
+  <Header>
+    <Format>MiniLight</Format>
+    <SamplesPerPixel>100</SamplesPerPixel>
+    <Resolution>
+      <Width>391</Width>
+      <Height>391</Height>
+    </Resolution>
+  </Header>
+  <Camera>
+    <Position x="0.278" y="0.275" z="-0.789" />
+    <Direction x="0" y="0" z="1" />
+    <FieldOfView>40</FieldOfView>
+  </Camera>
+  <GlobalIllumination>
+    <AmbientLight r="0.278" g="0.275" b="-0.789" />
+    <GroundReflection r="0" g="0" b="1" />
+  </GlobalIllumination>
+  <Geometry>
+    <Triangle>
+      <Vertex1 x="0.556" y="0.000" z="0.000" />
+      <Vertex2 x="0.006" y="0.000" z="0.559" />
+      <Vertex3 x="0.556" y="0.000" z="0.559" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.006" y="0.000" z="0.559" />
+      <Vertex2 x="0.556" y="0.000" z="0.000" />
+      <Vertex3 x="0.003" y="0.000" z="0.000" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.556" y="0.000" z="0.559" />
+      <Vertex2 x="0.000" y="0.549" z="0.559" />
+      <Vertex3 x="0.556" y="0.549" z="0.559" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.000" y="0.549" z="0.559" />
+      <Vertex2 x="0.556" y="0.000" z="0.559" />
+      <Vertex3 x="0.006" y="0.000" z="0.559" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.006" y="0.000" z="0.559" />
+      <Vertex2 x="0.000" y="0.549" z="0.000" />
+      <Vertex3 x="0.000" y="0.549" z="0.559" />
+      <Material>
+        <Reflectance r="0.7" g="0.2" b="0.2" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.000" y="0.549" z="0.000" />
+      <Vertex2 x="0.006" y="0.000" z="0.559" />
+      <Vertex3 x="0.003" y="0.000" z="0.000" />
+      <Material>
+        <Reflectance r="0.7" g="0.2" b="0.2" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.556" y="0.000" z="0.000" />
+      <Vertex2 x="0.556" y="0.549" z="0.559" />
+      <Vertex3 x="0.556" y="0.549" z="0.000" />
+      <Material>
+        <Reflectance r="0.2" g="0.7" b="0.2" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.556" y="0.549" z="0.559" />
+      <Vertex2 x="0.556" y="0.000" z="0.000" />
+      <Vertex3 x="0.556" y="0.000" z="0.559" />
+      <Material>
+        <Reflectance r="0.2" g="0.7" b="0.2" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.556" y="0.549" z="0.559" />
+      <Vertex2 x="0.000" y="0.549" z="0.000" />
+      <Vertex3 x="0.556" y="0.549" z="0.000" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.000" y="0.549" z="0.000" />
+      <Vertex2 x="0.556" y="0.549" z="0.559" />
+      <Vertex3 x="0.000" y="0.549" z="0.559" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.343" y="0.545" z="0.332" />
+      <Vertex2 x="0.213" y="0.545" z="0.227" />
+      <Vertex3 x="0.343" y="0.545" z="0.227" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="1000" g="1000" b="1000" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.213" y="0.545" z="0.227" />
+      <Vertex2 x="0.343" y="0.545" z="0.332" />
+      <Vertex3 x="0.213" y="0.545" z="0.332" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="1000" g="1000" b="1000" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.474" y="0.165" z="0.225" />
+      <Vertex2 x="0.426" y="0.165" z="0.065" />
+      <Vertex3 x="0.316" y="0.165" z="0.272" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.266" y="0.165" z="0.114" />
+      <Vertex2 x="0.316" y="0.165" z="0.272" />
+      <Vertex3 x="0.426" y="0.165" z="0.065" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.266" y="0.000" z="0.114" />
+      <Vertex2 x="0.266" y="0.165" z="0.114" />
+      <Vertex3 x="0.316" y="0.165" z="0.272" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.316" y="0.000" z="0.272" />
+      <Vertex2 x="0.266" y="0.000" z="0.114" />
+      <Vertex3 x="0.316" y="0.165" z="0.272" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.316" y="0.000" z="0.272" />
+      <Vertex2 x="0.316" y="0.165" z="0.272" />
+      <Vertex3 x="0.474" y="0.165" z="0.225" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.474" y="0.165" z="0.225" />
+      <Vertex2 x="0.316" y="0.000" z="0.272" />
+      <Vertex3 x="0.474" y="0.000" z="0.225" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.474" y="0.000" z="0.225" />
+      <Vertex2 x="0.474" y="0.165" z="0.225" />
+      <Vertex3 x="0.426" y="0.165" z="0.065" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.426" y="0.165" z="0.065" />
+      <Vertex2 x="0.426" y="0.000" z="0.065" />
+      <Vertex3 x="0.474" y="0.000" z="0.225" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.426" y="0.000" z="0.065" />
+      <Vertex2 x="0.426" y="0.165" z="0.065" />
+      <Vertex3 x="0.266" y="0.165" z="0.114" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.266" y="0.165" z="0.114" />
+      <Vertex2 x="0.266" y="0.000" z="0.114" />
+      <Vertex3 x="0.426" y="0.000" z="0.065" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.133" y="0.330" z="0.247" />
+      <Vertex2 x="0.291" y="0.330" z="0.296" />
+      <Vertex3 x="0.242" y="0.330" z="0.456" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.242" y="0.330" z="0.456" />
+      <Vertex2 x="0.084" y="0.330" z="0.406" />
+      <Vertex3 x="0.133" y="0.330" z="0.247" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.133" y="0.000" z="0.247" />
+      <Vertex2 x="0.133" y="0.330" z="0.247" />
+      <Vertex3 x="0.084" y="0.330" z="0.406" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.084" y="0.330" z="0.406" />
+      <Vertex2 x="0.084" y="0.000" z="0.406" />
+      <Vertex3 x="0.133" y="0.000" z="0.247" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.084" y="0.000" z="0.406" />
+      <Vertex2 x="0.084" y="0.330" z="0.406" />
+      <Vertex3 x="0.242" y="0.330" z="0.456" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.242" y="0.330" z="0.456" />
+      <Vertex2 x="0.242" y="0.000" z="0.456" />
+      <Vertex3 x="0.084" y="0.000" z="0.406" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.242" y="0.000" z="0.456" />
+      <Vertex2 x="0.242" y="0.330" z="0.456" />
+      <Vertex3 x="0.291" y="0.330" z="0.296" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.291" y="0.330" z="0.296" />
+      <Vertex2 x="0.291" y="0.000" z="0.296" />
+      <Vertex3 x="0.242" y="0.000" z="0.456" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.291" y="0.000" z="0.296" />
+      <Vertex2 x="0.291" y="0.330" z="0.296" />
+      <Vertex3 x="0.133" y="0.330" z="0.247" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+    <Triangle>
+      <Vertex1 x="0.133" y="0.330" z="0.247" />
+      <Vertex2 x="0.133" y="0.000" z="0.247" />
+      <Vertex3 x="0.291" y="0.000" z="0.296" />
+      <Material>
+        <Reflectance r="0.7" g="0.7" b="0.7" />
+        <Emission r="0" g="0" b="0" />
+      </Material>
+    </Triangle>
+  </Geometry>
+</Scene>

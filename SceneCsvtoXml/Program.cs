@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
@@ -9,58 +7,41 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Check if the correct number of arguments is provided
-        if (args.Length < 2)
+        // Get all .txt files in the current directory
+        string[] txtFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.txt");
+
+        if (txtFiles.Length == 0)
         {
-            Console.WriteLine("Usage: <program> <output_zip_path> <input_scene1> <input_scene2> ...");
+            Console.WriteLine("No .txt files found in the current directory.");
             return;
         }
 
-        // Read command-line arguments
-        string outputZipPath = args[0];
-        var sceneContents = new Dictionary<string, string>();
-
-        // Read each input scene file
-        for (int i = 1; i < args.Length; i++)
+        // Process each .txt file
+        foreach (string fileName in txtFiles)
         {
-            string fileName = args[i];
-            if (File.Exists(fileName))
+            try
             {
                 string sceneContent = File.ReadAllText(fileName);
-                sceneContents[Path.GetFileName(fileName)] = sceneContent;
-            }
-            else
-            {
-                Console.WriteLine($"File not found: {fileName}");
-                return;
-            }
-        }
 
-        // Create a zip file with converted XML scenes
-        using (ZipArchive zipFile = ZipFile.Open(outputZipPath, ZipArchiveMode.Create))
-        {
-            foreach (var kvp in sceneContents)
-            {
-                // Convert each scene to XML
-                XElement xmlTree = ConvertSceneToXml(kvp.Value);
+                // Convert the scene content to XML
+                XElement xmlTree = ConvertSceneToXml(sceneContent);
 
                 // Convert the XML tree to a string
                 string xmlString = xmlTree.ToString();
 
                 // Create a new XML file name
-                string xmlFileName = kvp.Key.Replace(".ml.txt", ".xml").Replace(".txt", ".xml");
+                string xmlFileName = Path.ChangeExtension(fileName, ".xml");
 
-                // Add the XML string to the zip file
-                var zipEntry = zipFile.CreateEntry(xmlFileName);
-                using (var writer = new StreamWriter(zipEntry.Open()))
-                {
-                    writer.Write(xmlString);
-                }
+                // Write the XML string to the file
+                File.WriteAllText(xmlFileName, xmlString);
+
+                Console.WriteLine($"Converted {fileName} to {xmlFileName}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error processing {fileName}: {ex.Message}");
             }
         }
-
-        // Provide the path to the created zip file
-        Console.WriteLine($"Zip file created at: {outputZipPath}");
     }
 
     // Function to convert a single scene file to XML format
