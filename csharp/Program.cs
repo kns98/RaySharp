@@ -1,4 +1,5 @@
 ﻿using Microsoft.FSharp.Core;
+using System.Text;
 
 namespace minlightcsfs;
 
@@ -14,40 +15,57 @@ internal class Program
         {
             var modelFilePathname = args[0];
             var imageFilePathname = Path.ChangeExtension(modelFilePathname, ".png");
-            var modelFile = File.OpenText(modelFilePathname);
-            var filetype = Scanf.getLine(modelFile);
-            if (!"#MiniLight".Equals(filetype))
+
+            string modelFileContent = "";
+
+
+            if (Path.GetExtension(modelFilePathname).Equals(".xml", StringComparison.OrdinalIgnoreCase))
             {
-                var message = "invalid model file";
-                throw Operators.Failure(message);
+                // Handle XML file
+                var xmlReader = new XmlReader(modelFilePathname);
+                Console.WriteLine("XML File Content:");
+                Console.WriteLine(xmlReader.Text);
+            }
+            else
+            {
+                // Read the entire model file into a string
+                modelFileContent = File.ReadAllText(modelFilePathname);
             }
 
-            var line = Scanf.getLine(modelFile);
-            var s = line;
-            var _line = Scanf.getLine(modelFile);
-            var wh = _line;
-            var width = int.Parse(_line.Split(" ")[0]);
-            var height = int.Parse(_line.Split(" ")[1]);
-            var iterations = int.Parse(s);
-            var image = new RenderedImage(modelFile, width, height);
-            var camera = new Camera(modelFile);
-            var scene = new Scene(modelFile, camera.eyePoint);
-            var random = new Random(1);
-            var lastTime = Operators.Ref(-181.0);
-            for (var frameNo = 0; frameNo < iterations; frameNo++)
-            {
-                camera.frame(scene, image, random);
-                saveImage(imageFilePathname, image, frameNo);
-                PrintfModule
-                    .PrintFormat(
-                        new PrintfFormat<FSharpFunc<int, Unit>, TextWriter, Unit, Unit, int>("iteration: %u\n"))
-                    .Invoke(frameNo);
+            // Handle non-XML model file
+            using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(modelFileContent)))
+            using (var modelFile = new StreamReader(memoryStream))
+            { 
+                var filetype = modelFile.ReadLine();
+                    if (!"#MiniLight".Equals(filetype))
+                    {
+                        var message = "invalid model file";
+                        throw Operators.Failure(message);
+                    }
+
+                    var iterations = int.Parse(modelFile.ReadLine());
+                    var dimensions = modelFile.ReadLine().Split(" ");
+                    var width = int.Parse(dimensions[0]);
+                    var height = int.Parse(dimensions[1]);
+
+                    var image = new RenderedImage(modelFile, width, height);
+                    var camera = new Camera(modelFile);
+
+                    var scene = new Scene(modelFile, camera.eyePoint);
+                    var random = new Random(1);
+                    var lastTime = Operators.Ref(-181.0);
+                    for (var frameNo = 0; frameNo < iterations; frameNo++)
+                    {
+                        camera.frame(scene, image, random);
+                        SaveImage(imageFilePathname, image, frameNo);
+                        Console.WriteLine($"iteration: {frameNo}");
+                    }
+                }
             }
         }
-    }
 
-    private static void saveImage(string imageFilePathname, RenderedImage renderedImage, int frameNo)
-    {
-        renderedImage.SaveImage(imageFilePathname, frameNo, false);
+        static void SaveImage(string imageFilePathname, RenderedImage renderedImage, int frameNo)
+        {
+            renderedImage.SaveImage(imageFilePathname, frameNo, false);
+        }
     }
-}
