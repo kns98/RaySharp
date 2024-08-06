@@ -4,6 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
+// Class to represent 3D points or vectors
+class Vector3Text
+{
+    public float X { get; }
+    public float Y { get; }
+    public float Z { get; }
+
+    public Vector3Text(float x, float y, float z)
+    {
+        X = x;
+        Y = y;
+        Z = z;
+    }
+
+    public override string ToString()
+    {
+        return $"({X} {Y} {Z})";
+    }
+}
+
 class XmlReader
 {
     public string Text { get; private set; }
@@ -18,43 +38,49 @@ class XmlReader
 
     StreamReader GetFileStreamReader(string filePath)
     {
-        // Check if the file exists
         if (!File.Exists(filePath))
         {
             throw new FileNotFoundException($"The file '{filePath}' was not found.");
         }
 
-        // Return a StreamReader for the file
         return new StreamReader(filePath);
     }
 
     string ConvertXmlToText(StreamReader reader)
     {
-        // Load the XML content from the StreamReader
         XDocument doc = XDocument.Load(reader);
 
         var header = doc.Root.Element("Header");
-        var format = header.Element("Format").Value;
-        var samplesPerPixel = header.Element("SamplesPerPixel").Value;
+        string format = header.Element("Format").Value;
+        int samplesPerPixel = int.Parse(header.Element("SamplesPerPixel").Value);
         var resolution = header.Element("Resolution");
-        var width = resolution.Element("Width").Value;
-        var height = resolution.Element("Height").Value;
+        int width = int.Parse(resolution.Element("Width").Value);
+        int height = int.Parse(resolution.Element("Height").Value);
 
         var camera = doc.Root.Element("Camera");
-        var position = camera.Element("Position");
-        var direction = camera.Element("Direction");
-        var fieldOfView = camera.Element("FieldOfView").Value;
+        var position = CreateVector3(camera.Element("Position"));
+        var direction = CreateVector3(camera.Element("Direction"));
+        float fieldOfView = float.Parse(camera.Element("FieldOfView").Value);
 
         StringBuilder output = new StringBuilder();
 
         output.AppendLine($"#{format}");
         output.AppendLine();
-        output.AppendLine(samplesPerPixel);
+        output.AppendLine(samplesPerPixel.ToString());
         output.AppendLine();
         output.AppendLine($"{width} {height}");
         output.AppendLine();
-        output.AppendLine($"({GetAttributeValue(position, "x")} {GetAttributeValue(position, "y")} {GetAttributeValue(position, "z")}) " +
-                          $"({GetAttributeValue(direction, "x")} {GetAttributeValue(direction, "y")} {GetAttributeValue(direction, "z")}) {fieldOfView}");
+
+        output.AppendLine($"{position} {direction} {fieldOfView}");
+        output.AppendLine();
+
+        var globalIllumination = doc.Root.Element("GlobalIllumination");
+        var ambientLight = CreateVector3(globalIllumination.Element("AmbientLight"));
+        var groundReflection = CreateVector3(globalIllumination.Element("GroundReflection"));
+
+        output.Append($"{ambientLight}");
+        output.Append(" ");
+        output.AppendLine($"{groundReflection}");
         output.AppendLine();
 
         var geometry = doc.Root.Element("Geometry");
@@ -62,25 +88,31 @@ class XmlReader
 
         foreach (var triangle in triangles)
         {
-            var vertices = triangle.Elements().Where(e => e.Name.LocalName.StartsWith("Vertex")).ToList();
+            var vertices = triangle.Elements().Where(e => e.Name.LocalName.StartsWith("Vertex")).Select(CreateVector3).ToList();
             var material = triangle.Element("Material");
-            var reflectance = material.Element("Reflectance");
-            var emission = material.Element("Emission");
+            var reflectance = CreateVector3(material.Element("Reflectance"));
+            var emission = CreateVector3(material.Element("Emission"));
 
-            output.Append(string.Join(" ", vertices.Select(v =>
-                $"({GetAttributeValue(v, "x")} {GetAttributeValue(v, "y")} {GetAttributeValue(v, "z")})")));
-
-            output.Append($" ({GetAttributeValue(reflectance, "r")} {GetAttributeValue(reflectance, "g")} {GetAttributeValue(reflectance, "b")})");
-            output.AppendLine($" ({GetAttributeValue(emission, "r")} {GetAttributeValue(emission, "g")} {GetAttributeValue(emission, "b")})");
+            output.Append(string.Join(" ", vertices));
+            output.Append($" {reflectance}");
+            output.AppendLine($" {emission}");
         }
 
         return output.ToString();
     }
 
-    string GetAttributeValue(XElement element, string attributeName)
+    Vector3Text CreateVector3(XElement element)
     {
-        // Return the attribute value or "0" if it is null or empty
+        return new Vector3Text(
+            GetAttributeValueAsFloat(element, "x"),
+            GetAttributeValueAsFloat(element, "y"),
+            GetAttributeValueAsFloat(element, "z")
+        );
+    }
+
+    float GetAttributeValueAsFloat(XElement element, string attributeName)
+    {
         var attribute = element.Attribute(attributeName);
-        return string.IsNullOrEmpty(attribute?.Value) ? "0" : attribute.Value;
+        return string.IsNullOrEmpty(attribute?.Value) ? 0f : float.Parse(attribute.Value);
     }
 }
